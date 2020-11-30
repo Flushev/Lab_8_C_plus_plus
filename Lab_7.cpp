@@ -20,8 +20,7 @@
 #define st_type "_Вид_"
 #define st_name "_Бренд_"
 #define st_season "__Сезон__"
-#define st_price = 0
-#define stavka 1000
+#define st_price = 0;
 #define pr 0.24
 
 
@@ -242,12 +241,6 @@ public:
 		cout << "\nВозврат прошел успешно\n";
 	}
 
-	void rent(double &renta)
-	{
-		renta = kol * stavka;
-		cout << "Доплата за количество пар обуви: " << renta << endl;
-		return;
-	}
 
 	void tax(double* taxa)
 	{
@@ -268,14 +261,20 @@ public:
 		++ *this;
 		return tmp;
 	}
-
-
+	
+	static void rent(int& renta)
+	{
+		renta += stavka;
+		return;
+	}
 private:
 	int kol;
 	double profit;
 	int sale_count;
 	shoes* para[LEN];
+	static int stavka;
 };
+int store::stavka = 300;
 
 
 int main()
@@ -288,7 +287,7 @@ int main()
 	string standart_name = "__Бренд__";
 	string standart_type = "__Вид__";
 	string standart_art = "__Арт__";
-	double renta = 0;
+	int renta = 0;
 	double taxa = 0;
 
 	// Начало основной программы
@@ -299,7 +298,9 @@ int main()
 	cout << "Работа со статическими переменными\n" << endl;
 	cout << "\nПосле ввода\n" << endl;
 	st.display();
+	// Статический метод
 	st.rent(renta);
+	cout << "Налог на обувь: \n" << renta << endl;
 	st.sale();
 	cout << "\nПосле продажи\n" << endl;
 	st.display();
@@ -324,14 +325,15 @@ int main()
 	cout << "Количество продаж вo 2 магазине:\n" << st.get_sale() << endl;
 
 
-
+	renta = 0;
 	cout << "\n-------------------------------------------------\n" << endl;
 	cout << "\nРабота с динамическим объектом класса\n" << endl;
 	shoes* para2 = new shoes(standart_name, standart_type, standart_art, 0);
 	para2->read();
 	store* st2 = new store(kol, 0, 0, para2);
 	cout << "\nПосле ввода\n" << endl;
-
+	store::rent(renta);
+	cout << "Налог на обувь: \n" << renta << endl;
 	st2->display();
 	st2->sale();
 	cout << "\nПосле продажи\n" << endl;
@@ -342,7 +344,7 @@ int main()
 	sum = add(sum, para2);
 
 
-
+	renta = 0;
 	cout << "\n-------------------------------------------------\n" << endl;
 	cout << "\nРабота с массивом\n" << endl;
 	shoes para3[LEN];
@@ -353,6 +355,7 @@ int main()
 
 		para3[i].read();
 		sum = add(sum, &para3[i]);
+		st.rent(renta);
 	}
 	store* st3 = new store(kol, 0, 0, para3);
 
@@ -360,6 +363,7 @@ int main()
 
 	cout << "\nПосле ввода\n" << endl;
 	st3->display();
+	cout << "Налог на обувь: \n" << renta << endl;
 	st3->sale();
 	cout << "\nПосле продажи\n" << endl;
 	st3->display();
