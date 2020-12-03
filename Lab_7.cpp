@@ -264,7 +264,9 @@ public:
 	
 	static void rent(int& renta)
 	{
-		renta += stavka;
+		static int stavka = 0;
+		stavka += 300;
+		renta = stavka;
 		return;
 	}
 private:
@@ -272,9 +274,7 @@ private:
 	double profit;
 	int sale_count;
 	shoes* para[LEN];
-	static int stavka;
 };
-int store::stavka = 300;
 
 
 int main()
