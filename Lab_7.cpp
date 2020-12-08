@@ -58,8 +58,7 @@ public:
 
 	shoes(shoes& s)
 	{
-		season = new char[20];
-		strcpy (this->season, s.season);
+		this->season = s.season;
 		this->price = s.price;
 	}
 
@@ -360,7 +359,7 @@ int main()
 	}
 	
 	
-	//Глубокое копирование
+	//Мелкое копирование
 	char* season;
 	season = new char[20];
 	strcpy(season, "Зима");
