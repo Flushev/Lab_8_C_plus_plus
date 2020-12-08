@@ -320,7 +320,6 @@ public:
 	
 	static int rent(int kol)
 	{
-<<<<<<< HEAD
 		static int stavka = 300;
 		int renta = 0;
 		if (kol < 2)
@@ -328,13 +327,8 @@ public:
 		else stavka -= 20;
 		renta = kol * stavka;
 		return renta;
-=======
-		static int stavka = 0;
-		stavka += 300;
-		renta = stavka;
-		return;
->>>>>>> 7698580fa0e57ba0f76f1d526ea27305a2542fbb
 	}
+
 private:
 	int kol;
 	double profit;
@@ -367,6 +361,7 @@ int main()
 	
 	
 	//Глубокое копирование
+	cout << "Глубокое копирование:" << endl;
 	char* season;
 	season = new char[20];
 	strcpy(season, "Зима");
@@ -383,6 +378,7 @@ int main()
 	s1.display_copy();
 
 	//Перегрузка оператора присваивания
+	cout << "Перегрузка присваивания:" << endl;
 	shoes* s2 = new shoes(season, 3000);
 	strcpy(season, "Зима");
 	shoes* s3 = new shoes(season, 5000);
