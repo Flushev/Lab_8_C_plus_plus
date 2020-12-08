@@ -360,6 +360,7 @@ int main()
 	
 	
 	//Мелкое копирование
+	cout << "Мелкое копирование" << endl;
 	char* season;
 	season = new char[20];
 	strcpy(season, "Зима");
@@ -376,6 +377,7 @@ int main()
 	s1.display_copy();
 
 	//Перегрузка оператора присваивания
+	cout << "Перегрузка присваивания" << endl;
 	shoes* s2 = new shoes(season, 3000);
 	strcpy(season, "Зима");
 	shoes* s3 = new shoes(season, 5000);
