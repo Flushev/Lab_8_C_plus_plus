@@ -320,6 +320,7 @@ public:
 	
 	static int rent(int kol)
 	{
+<<<<<<< HEAD
 		static int stavka = 300;
 		int renta = 0;
 		if (kol < 2)
@@ -327,13 +328,18 @@ public:
 		else stavka -= 20;
 		renta = kol * stavka;
 		return renta;
+=======
+		static int stavka = 0;
+		stavka += 300;
+		renta = stavka;
+		return;
+>>>>>>> 7698580fa0e57ba0f76f1d526ea27305a2542fbb
 	}
 private:
 	int kol;
 	double profit;
 	int sale_count;
 	shoes* para[LEN];
-	static int stavka;
 };
 
 
