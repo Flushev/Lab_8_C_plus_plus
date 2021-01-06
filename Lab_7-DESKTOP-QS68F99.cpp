@@ -42,15 +42,10 @@ public:
 
 	shoes(string name, string type, string art, double price)
 	{
-		// 	Работа с исключениями
-		if (price < 0) throw 1;
-		else
-		{
-			this->name = name;
-			this->type = type;
-			this->art = art;
-			this->price = price;
-		}
+		this->name = name;
+		this->type = type;
+		this->art =  art;
+		this->price = price;
 	}
 
 	shoes(char* s, double price)
@@ -58,10 +53,7 @@ public:
 		int k = strlen(s) + 1;
 		season = new char[k];
 		strcpy(season, s);
-		if (price < 0) 
-			throw 1;
-		else
-			this->price = price;
+		this->price = price;
 	}
 
 	shoes(shoes& s)
@@ -91,10 +83,7 @@ public:
 		name = st_name;
 		type = st_type;
 		art = st_art;
-		if (price < 0) 
-			throw 1;
-		else
-			this->price = price;
+		this->price = price;
 	}
 
 	void set_season(char* s)
@@ -144,40 +133,14 @@ public:
 
 	void read()
 	{
-		
-		int f = 0;
-		double temp;
 		cout << "Введите бренд\n";
 		rewind(stdin); cin >> name;
 		cout << "Введите вид обуви\n";
 		rewind(stdin); cin >> type;
 		cout << "Введите артикул\n";
 		rewind(stdin); cin >> art;
-		// Работа с исключениями
-		while (f == 0)
-		{
-			cout << "Введите стоимость\n";
-			cin >> temp;
-			try
-			{
-				if (temp > 0)
-				{
-					f = 1;
-					price = temp;
-				}
-				else
-				{
-					throw 2;
-				}
-			}
-			catch (int a)
-			{
-				cout << "Ошибка ввода! Цена не может быть отрицательной!" << endl;
-				f = 0;
-				cin.clear();
-				while (cin.get() != '\n');
-			}
-		}
+		cout << "Введите стоимость\n";
+		cin >> price;
 	}
 
 
