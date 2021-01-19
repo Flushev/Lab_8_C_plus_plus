@@ -258,6 +258,20 @@ public:
 		}
 	}
 
+	store(int box, int k_box, shoes para[10][LEN])
+	{
+
+		this->box = box;
+		this->k_box = k_box;
+		for (int i = 0; i < box; i++)
+		{
+			for (int j = 0; j < k_box; j++)
+			{
+				this->para_1[i][j] = para[i][j];
+			}
+		}
+	}
+
 	shoes* get_shoes(store st)
 	{
 		return *para;
@@ -366,11 +380,26 @@ public:
 		return renta;
 	}
 
+	void display_box()
+	{
+		cout << "Количество коробок на складе" << k_box << endl;
+		cout << "Количество пар в коробке" << box << endl;
+		cout << "Общее количесво пар на складе" << kol << endl;
+		for (int i = 0; i < box; i++)
+			for (int j = 0; j < k_box; j++)
+				para_1[i][j].display();
+		
+	}
+
 private:
 	int kol;
 	double profit;
 	int sale_count;
+	int box;
+	int k_box;
 	shoes* para[LEN];
+	shoes para_1 [10][LEN];
+
 };
 
 
@@ -396,6 +425,15 @@ int main()
 		cout << "\n" << endl;
 	}
 	
+	// Двойной массив объектов
+	shoes p[10][LEN];
+	for (int i = 0; i < 1; i++)
+		for (int j = 0; j < 1; j++)
+		{
+			p[i][j].read();
+		}
+	store sklad(1, 1, p);
+
 	
 	//Глубокое копирование
 	cout << "Глубокое копирование:" << endl;
@@ -457,19 +495,6 @@ int main()
 	kol = st.get_kol();
 	renta = store::rent(st.get_kol());
 	cout << "Налог на обувь: \n" << renta << endl;
-
-	// Перегрузки
-	cout << "\n __Перегрузки__ \n" << endl;
-	store st10 (kol, 0, 2, para1);
-	st10.display();
-	st10 = ++st;
-	cout << "\n Префикс: \n" << endl;
-	cout << "Количество продаж в 1 магазине:\n" << st10.get_sale() << endl;
-	cout << "Количество продаж вo 2 магазине:\n" << st.get_sale() << endl;
-	st10 = st++;
-	cout << "\n Постфикс: \n" << endl;
-	cout << "Количество продаж в 1 магазине:\n" << st10.get_sale() << endl;
-	cout << "Количество продаж вo 2 магазине:\n" << st.get_sale() << endl;
 
 
 
