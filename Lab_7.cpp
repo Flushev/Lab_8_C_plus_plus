@@ -71,20 +71,7 @@ public:
 		this->price = s.price;
 	}
 
-	shoes& operator = (shoes& s)
-	{
-		int k;
-		if (this->season)
-		{
-			delete this->season;
-		}
-		this->season = NULL;
-		k = strlen(s.season) + 1;
-		this->season = new char[k];
-		strcpy(this->season, s.season);
-		this->price = s.price;
-		return *this;
-	}
+
 
 	shoes(double price)
 	{
@@ -257,21 +244,28 @@ public:
 			this->para[i] = para;
 		}
 	}
-
+	// Конструктор для склада обуви
 	store(int box, int k_box, shoes para[10][LEN])
 	{
-
+		this->kol = box * k_box;
 		this->box = box;
 		this->k_box = k_box;
-		for (int i = 0; i < box; i++)
+		for (int i = 0; i < box; i++) // Формирует количество коробок
 		{
-			for (int j = 0; j < k_box; j++)
+			for (int j = 0; j < k_box; j++) // Формирует количество пар в каждой коробке
 			{
 				this->para_1[i][j] = para[i][j];
 			}
 		}
 	}
-
+	//Конструтор для коробки с обувью
+	store(int box, shoes para[LEN])
+	{
+		this->kol = box;
+		this->box = box;
+		for (int i = 0; i < box; i++) // Формирует Количество пар в коробке
+			this->para_2[i] = para[i];
+	}
 	shoes* get_shoes(store st)
 	{
 		return *para;
@@ -380,15 +374,44 @@ public:
 		return renta;
 	}
 
-	void display_box()
+	double cost_sklad()
 	{
-		cout << "Количество коробок на складе" << k_box << endl;
-		cout << "Количество пар в коробке" << box << endl;
-		cout << "Общее количесво пар на складе" << kol << endl;
+		double cost = 0;
 		for (int i = 0; i < box; i++)
 			for (int j = 0; j < k_box; j++)
+				cost += para_1[i][j].get_price();
+		return cost;
+	}
+
+	double cost_box()
+	{
+		double cost = 0;
+		for (int i = 0; i < box; i++)
+			cost += para_2[i].get_price();
+		return cost;
+	}
+
+	void display_sklad()
+	{
+		cout << "Количество коробок на складе " << k_box << endl;
+		cout << "Количество пар в коробке " << box << endl;
+		cout << "Общее количесво пар на складе " << kol << endl;
+		cout << "Общая стоимость товаров на складе " << cost_sklad() << endl;
+		for (int i = 0; i < box; i++)
+		{
+			for (int j = 0; j < k_box; j++)
 				para_1[i][j].display();
+			cout << "\n" << endl;
+		}
 		
+	}
+
+	void display_box()
+	{
+		cout << "Количество пар в коробке " << box << endl;
+		cout << "Общая стоимость товаров в коробке " << cost_box() << endl;
+		for (int i = 0; i < box; i++)
+			para_2[i].display();
 	}
 
 private:
@@ -399,6 +422,7 @@ private:
 	int k_box;
 	shoes* para[LEN];
 	shoes para_1 [10][LEN];
+	shoes para_2[LEN];
 
 };
 
@@ -424,16 +448,32 @@ int main()
 		para_tmp[i].display();
 		cout << "\n" << endl;
 	}
-	
+
+	int box = 0;
+	int k_box = 0;
+
 	// Двойной массив объектов
 	shoes p[10][LEN];
-	for (int i = 0; i < 1; i++)
-		for (int j = 0; j < 1; j++)
+	cout << "Введите количество коробок на складе" << endl;
+	cin >> box;
+	cout << "Введите количество пар в коробке" << endl;
+	cin >> k_box;
+	for (int i = 0; i < box; i++)
+		for (int j = 0; j < k_box; j++)
 		{
 			p[i][j].read();
 		}
-	store sklad(1, 1, p);
+	store sklad(box, k_box, p);
+	sklad.display_sklad();
 
+	// Одномерный массив объектов
+	shoes p1[LEN];
+	cout << "Введите количество пар в коробке" << endl;
+	cin >> box;
+	for (int i = 0; i < box; i++)
+		p1[i].read();
+	store box1(box, p1);
+	box1.display_box();
 	
 	//Глубокое копирование
 	cout << "Глубокое копирование:" << endl;
@@ -451,23 +491,6 @@ int main()
 	s.set_price(5000);
 	s.display_copy();
 	s1.display_copy();
-
-	//Перегрузка оператора присваивания
-	cout << "Перегрузка присваивания:" << endl;
-	shoes* s2 = new shoes(season, 3000);
-	strcpy(season, "Зима");
-	shoes* s3 = new shoes(season, 5000);
-	cout << "\nПосле инициализации\n" << endl;
-	s2->display_copy();
-	s3->display_copy();
-	cout << "\nПосле копирования\n" << endl;
-	*s3 = *s2;
-	s2->display_copy();
-	s3->display_copy();
-	s2->set_season(season);
-	cout << "\nПосле изменения первого объекта\n" << endl;
-	s2->display_copy();
-	s3->display_copy();
 
 
 	cout << "\n Основная программа:\n" << endl;
